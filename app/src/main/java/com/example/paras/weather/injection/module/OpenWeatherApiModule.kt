@@ -1,7 +1,7 @@
 package com.example.paras.weather.injection.module
 
 import com.example.paras.weather.interceptor.OpenWeatherInterceptor
-import com.example.paras.weather.OpenWeatherApi
+import com.example.paras.weather.OpenWeatherAPI
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -15,12 +15,12 @@ import javax.inject.Singleton
 class OpenWeatherApiModule {
 
     @Provides @Singleton
-    fun provideApi(gson : Gson) : OpenWeatherApi{
+    fun provideApi(gson : Gson) : OpenWeatherAPI{
         val apiClient = OkHttpClient.Builder().addInterceptor(OpenWeatherInterceptor()).build()
         return Retrofit.Builder().apply {
-            baseUrl(OpenWeatherApi.BASE_URL)
+            baseUrl(OpenWeatherAPI.BASE_URL)
             addConverterFactory(GsonConverterFactory.create(gson))
             client(apiClient)
-        }.build().create(OpenWeatherApi :: class.java)
+        }.build().create(OpenWeatherAPI :: class.java)
     }
 }
