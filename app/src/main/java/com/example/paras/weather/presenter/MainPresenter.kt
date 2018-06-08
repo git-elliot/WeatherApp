@@ -2,9 +2,11 @@ package com.example.paras.weather.presenter
 
 import com.example.paras.weather.BuildConfig
 import com.example.paras.weather.OpenWeatherAPI
+import com.example.paras.weather.data.ForecastDetail
 import com.example.paras.weather.data.WeatherResponse
 import com.example.paras.weather.interceptor.OpenWeatherInterceptor
 import com.example.paras.weather.ui.ErrorTypes
+import com.example.paras.weather.ui.ForecastItemViewModel
 import com.example.paras.weather.ui.MainView
 import retrofit2.Call
 import retrofit2.Callback
@@ -36,5 +38,16 @@ class MainPresenter(val view : MainView){
 
 
             })
+
+    }
+    private fun createListForView(weatherResponse : WeatherResponse){
+        val forecasts = mutableListOf<ForecastItemViewModel>()
+        for ( forecastDetail : ForecastDetail in weatherResponse.forecast){
+            val dayTemp = forecastDetail.temperature.dayTemperature
+            val forecastItem = ForecastItemViewModel(degreeDay = dayTemp.toString(),date = forecastDetail.date,
+                    icon = forecastDetail.description[0].description)
+            forecasts.add(forecastItem)
+        }
+        view.updateForecast(forecasts)
     }
 }

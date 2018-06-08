@@ -3,7 +3,7 @@ package com.example.paras.weather.ui
 interface MainView{
     fun showSpinner()
     fun hideSpinner()
-    fun updateForecase(forecase : List<ForecastItemViewModel>)
+    fun updateForecast(forecase : List<ForecastItemViewModel>)
     fun showErrorToast(errorType : ErrorTypes )
 }
 
